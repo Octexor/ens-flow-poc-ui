@@ -40,7 +40,7 @@ export const App = () => {
   const [zdt, setZdt] = usePersistate(25, 'zdt');
   const [dPoints, setDPoints] = usePersistate(600, 'dpoints');
   const [iter, setIter] = usePersistate(800, 'iter');
-  const [vib, setVib] = usePersistate(50, 'vib');
+  const [vib, setVib] = usePersistate(90, 'vib');
 
   const gen = () => {
     let cName = normName;
@@ -111,7 +111,7 @@ export const App = () => {
                   <FlowSlider label="Dynamic:" minVal={1} maxVal={50} step={1} initVal={zdt} onChange={v => setZdt(v)}></FlowSlider>
                   <FlowSlider label="Draw Points:" minVal={100} maxVal={1000} step={100} initVal={dPoints} onChange={v => setDPoints(v)}></FlowSlider>
                   <FlowSlider label="Iterations:" minVal={100} maxVal={2000} step={100} initVal={iter} onChange={v => setIter(v)}></FlowSlider>
-                  <FlowSlider label="Vibrance:" minVal={1} maxVal={100} step={1} initVal={vib} onChange={v => setVib(v)}></FlowSlider>
+                  <FlowSlider label="Vibrance:" minVal={1} maxVal={200} step={1} initVal={vib} onChange={v => setVib(v)}></FlowSlider>
                 </VStack>
                 <HStack spacing={6}>
                   <HStack spacing={0}>
