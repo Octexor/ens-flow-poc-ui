@@ -118,7 +118,7 @@ export const App = () => {
   React.useEffect(() => {
     const colors = useMiddleColor ? [c1, c2, c3] : [c1, c3];
     setGradient(colors.join(','));
-  }, [c1, c2, c3])
+  }, [c1, c2, c3]);
 
   React.useEffect(() => {
     if(useMiddleColor) {
@@ -126,11 +126,19 @@ export const App = () => {
     } else {
       updateGradient([c1, c3]);
     }
-  }, [useMiddleColor])
+  }, [useMiddleColor]);
 
   React.useEffect(() => {
     setG(gradient.split(',').map((c: string) => c.slice(1)).join(','));
-  }, [gradient])
+  }, [gradient]);
+
+  React.useEffect(() => {
+    try {
+      if(normalize(name) !== normName) {
+        setName(normName);
+      }
+    } catch(err) {}
+  }, [normName]);
 
   React.useEffect(() => {
     if(g) {
@@ -139,7 +147,7 @@ export const App = () => {
     if(input.current) {
       input.current.focus();
     }
-  }, [])
+  }, []);
 
   return (
     <ChakraProvider theme={theme}>
@@ -177,7 +185,7 @@ export const App = () => {
                 </Box>
                 <Flex w="full" direction="row" justifyContent="space-between">
                   <ColorPicker name="Bottom" value={c1} onChange={c => {setC1(c);setGIdx(-1)}} disableAlpha={true} width={300} isDisabled={loading}/>
-                  <Flex>
+                  <Flex pr="30px">
                     <Checkbox colorScheme='teal' isChecked={useMiddleColor} onChange={e => setUseMiddleColor(e.target.checked)} isDisabled={loading}>&nbsp;</Checkbox>
                     <ColorPicker name="Middle" isDisabled={!useMiddleColor || loading} value={c2} onChange={c => {setC2(c);setGIdx(-1)}} disableAlpha={true} width={300}/>
                   </Flex>

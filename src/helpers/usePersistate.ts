@@ -14,14 +14,19 @@ function usePersistate(defaultValue: any, key: string) {
     return [value, setValue];
 }
 
+function parseHashVal(hashValue: string): string | boolean {
+    let hVal: string | boolean = hashValue;
+    if(hVal === "true" || hVal === "false") {
+        hVal = hVal === "true";
+    }
+    return hVal;
+}
+
 function useHashPersistate(defaultValue: any, key: string) {
     const [hashValue, setHashValue] = useHashParam(key, defaultValue);
     const [value, setValue] = React.useState(() => {
         const stickyValue = window.localStorage.getItem(key);
-        let hVal: string | boolean = hashValue;
-        if(hVal === "true" || hVal === "false") {
-            hVal = hVal === "true";
-        }
+        const hVal = parseHashVal(hashValue);
         return hVal !== '' ? hVal : (stickyValue !== null
             ? JSON.parse(stickyValue)
             : defaultValue);
@@ -30,6 +35,12 @@ function useHashPersistate(defaultValue: any, key: string) {
         window.localStorage.setItem(key, JSON.stringify(value));
         setHashValue(value);
     }, [key, value]);
+    React.useEffect(() => {
+        const hVal = parseHashVal(hashValue);
+        if(hVal !== value) {
+            setValue(hVal);
+        }
+    }, [hashValue]);
     return [value, setValue];
 }
 
