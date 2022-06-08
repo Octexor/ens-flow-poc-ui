@@ -176,7 +176,7 @@ export const App = () => {
                   </Menu>
                 </Box>
                 <Flex w="full" direction="row" justifyContent="space-between">
-                  <ColorPicker name="Below" value={c1} onChange={c => {setC1(c);setGIdx(-1)}} disableAlpha={true} width={300} isDisabled={loading}/>
+                  <ColorPicker name="Bottom" value={c1} onChange={c => {setC1(c);setGIdx(-1)}} disableAlpha={true} width={300} isDisabled={loading}/>
                   <Flex>
                     <Checkbox colorScheme='teal' isChecked={useMiddleColor} onChange={e => setUseMiddleColor(e.target.checked)} isDisabled={loading}>&nbsp;</Checkbox>
                     <ColorPicker name="Middle" isDisabled={!useMiddleColor || loading} value={c2} onChange={c => {setC2(c);setGIdx(-1)}} disableAlpha={true} width={300}/>
