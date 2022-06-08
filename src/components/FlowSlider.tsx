@@ -18,17 +18,18 @@ type Props = {
   maxVal: number,
   step: number,
   label: string,
+  isDisabled?: boolean,
   onChange: (v: number) => void
 }
 
-const FlowSlider = ({initVal, minVal, maxVal, step, onChange, label}: Props) => {
+const FlowSlider = ({initVal, minVal, maxVal, step, onChange, label, isDisabled}: Props) => {
   const [vib, setVib] = React.useState(initVal)
 
   return (
     <VStack spacing={0} w="100%" alignItems="flex-start">
     <FormLabel>{label}</FormLabel>
     <Flex w="100%" px={2} justifyContent="space-between" alignItems="center">
-    <Slider defaultValue={initVal} min={minVal} max={maxVal} step={step} onChange={(v) => {setVib(v); onChange(v)}} flex="1 0 70%">
+    <Slider defaultValue={initVal} min={minVal} max={maxVal} step={step} onChange={(v) => {setVib(v); onChange(v)}} flex="1 0 70%" isDisabled={isDisabled}>
       <SliderTrack bg='red.100'>
         <SliderFilledTrack bg='teal' />
       </SliderTrack>

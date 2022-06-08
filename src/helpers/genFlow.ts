@@ -1,5 +1,6 @@
 type FlowProps = {
     name: string,
+    cp: string,
     dt: number,
     zdt: number,
     dPoints: number,
@@ -8,9 +9,10 @@ type FlowProps = {
     withLogo: boolean
 }
 
-async function genFlow({name, dt, zdt, dPoints, iter, vib, withLogo}: FlowProps) {
+async function genFlow({name, cp, dt, zdt, dPoints, iter, vib, withLogo}: FlowProps) {
     const usp = new URLSearchParams();
     usp.set("name", name);
+    usp.set("cp", cp.split(',').map(c => c.slice(1)).join(','));
     usp.set("dt", (dt/100)+'');
     usp.set("zdt", (zdt/100000)+'');
     usp.set("dp", dPoints+'');

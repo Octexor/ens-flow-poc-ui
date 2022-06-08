@@ -1,0 +1,18 @@
+.chakra-slider__thumb[role="slider"] {
+    z-index: 0;
+}
+
+.gradientList > .chakra-menu__group {
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, auto);
+}
+
+.chrome-picker input {
+    color: #dde0e3 !important;
+    background-color: #202124;
+}
+
+.chakra-button__icon {
+    color: var(--g-arrow-color);
+}
