@@ -7,7 +7,7 @@ import {
 import { Global, css } from '@emotion/react';
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import theme from "./theme"
-import usePersistate from "./helpers/usePersistate";
+import usePersistate, { useHashPersistate } from "./helpers/usePersistate";
 import {normalize} from "./helpers/ensUtils"
 import FlowSlider from "./components/FlowSlider";
 import genFlow from "./helpers/genFlow";
@@ -15,27 +15,29 @@ import gradients from "./helpers/gradients";
 import { getContrastColor, pickColor } from "./helpers/colorUtils";
 import ColorPicker from "./components/ColorPicker";
 import './styles.css';
+import useHashParam from "use-hash-param";
 
 export const App = () => {
-  const [name, setName] = React.useState('');
-  const [normName, setNormName] = React.useState('');
+  const [normName, setNormName] = useHashParam('name', '');
+  const [name, setName] = React.useState(normName);
   const [isInvalid, setIsInvalid] = React.useState(false);
   const [inputError, setInputError] = React.useState('');
   const [outputError, setOutputError] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [src, setSrc] = React.useState('url(./img/glow.png)');
   const [gradient, setGradient] = usePersistate(gradients[0].join(','), 'gradient');
+  const [g, setG] = useHashParam('g', '');
   const [gIdx, setGIdx] = usePersistate(0, 'gIdx');
   const [useMiddleColor, setUseMiddleColor] = usePersistate(true, 'mColor');
   const [c1, setC1] = usePersistate(gradients[0][0], 'c1');
   const [c2, setC2] = usePersistate(gradients[0][1], 'c2');
   const [c3, setC3] = usePersistate(gradients[0][2], 'c3');
-  const [dt, setDt] = usePersistate(5, 'dt');
-  const [zdt, setZdt] = usePersistate(25, 'zdt');
-  const [dPoints, setDPoints] = usePersistate(600, 'dpoints');
-  const [iter, setIter] = usePersistate(800, 'iter');
-  const [vib, setVib] = usePersistate(90, 'vib');
-  const [withLogo, setWithLogo] = usePersistate(false, 'withLogo');
+  const [dt, setDt] = useHashPersistate(5, 'dt');
+  const [zdt, setZdt] = useHashPersistate(25, 'zdt');
+  const [dPoints, setDPoints] = useHashPersistate(600, 'dp');
+  const [iter, setIter] = useHashPersistate(800, 'i');
+  const [vib, setVib] = useHashPersistate(90, 'v');
+  const [withLogo, setWithLogo] = useHashPersistate(false, 'l');
   const [cCrop, setCCrop] = usePersistate(false, 'cCrop');
   const input = React.useRef<HTMLInputElement>(null);
   
@@ -127,6 +129,13 @@ export const App = () => {
   }, [useMiddleColor])
 
   React.useEffect(() => {
+    setG(gradient.split(',').map((c: string) => c.slice(1)).join(','));
+  }, [gradient])
+
+  React.useEffect(() => {
+    if(g) {
+      updateGradient(g.split(',').map((c: string) => '#'+c).join(','));
+    }
     if(input.current) {
       input.current.focus();
     }
